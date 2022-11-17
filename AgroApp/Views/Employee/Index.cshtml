@@ -1,0 +1,26 @@
+﻿@model IEnumerable<UserModel>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Pracownicy</h1>
+ 
+<table class="table table-sm table-bordered">
+    <tr>
+        <th>Name</th>
+        <th>Surname</th>
+        <th>Login</th>
+        <th>Email</th>
+        <th>Position</th>
+    </tr>
+    @foreach (UserModel user in Model)
+    {
+        <tr>
+            <td>@user.Name</td>
+            <td>@user.Surname</td>
+            <td>@user.UserName</td>
+            <td>@user.Email</td>
+            <td>@user.Position</td>
+        </tr>
+    }
+</table>

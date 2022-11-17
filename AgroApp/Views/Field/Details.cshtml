@@ -1,0 +1,60 @@
+﻿@model AgroApp.Models.FieldModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>FieldModel</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FieldId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FieldId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Number)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Number)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Area)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Area)
+        </dd>
+    </dl>
+    <table class="table">
+        <h1>Wpisy</h1>
+         <tr>
+            <th>Kolumna1</th>
+            <th>Kolumna2</th>
+            <th>Kolumna3</th>
+            <th>Kolumna4</th>
+        </tr>
+         @foreach (var item in Model.Entry)
+        {
+       
+            <tr>
+                <td>@Html.DisplayFor(m => item.EntryId)</td>
+                <td>@Html.DisplayFor(m => item.Date)</td>
+                <td>@Html.DisplayFor(m => item.EntryInfo)</td>
+            </tr>
+        }
+    </table>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.FieldId }) |
+    <a asp-action="Index">Back to List</a>
+</div>

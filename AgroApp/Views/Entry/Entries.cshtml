@@ -1,0 +1,47 @@
+﻿@model IEnumerable<AgroApp.Models.EntryModel>
+
+@{
+    ViewData["Title"] = "Entries";
+}
+
+<h1>Entries</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.WorkType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EntryInfo)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.WorkType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EntryInfo)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.EntryId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.EntryId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.EntryId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

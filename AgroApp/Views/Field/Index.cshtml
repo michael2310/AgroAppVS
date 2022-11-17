@@ -1,0 +1,62 @@
+﻿@model IEnumerable<AgroApp.Models.FieldModel>
+
+@{
+    ViewData["Title"] = "Index";
+    ViewData["Entries"] = "Details";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/table.css" />
+</head>
+
+
+
+<div class="row">
+       <h1>Spis pól</h1>
+       <p>
+    <a asp-action="Create" asp-route-id="@ViewBag.FarmId">Dodaj działkę</a>
+</p>
+
+        <div class="card border-0 shadow rounded-3 my-5">
+            <div class="card-body p-4 p-sm-5">
+<table class="table">
+    <thead>
+        <tr>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.Number)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+          
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr class="rows" onclick="location.href='@Url.Action("Details", "Entry", new{id = item.FieldId})'">
+      
+            <td>
+                @Html.DisplayFor(modelItem => item.Number)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+         
+            <td>
+                @Html.ActionLink("Edit", "Edit", @item.FieldId) |
+                @Html.ActionLink("Details", "Details", new {  id=item.FieldId  }) |
+                @Html.ActionLink("Delete", "Delete", new {  id=item.FieldId  }) |
+                <a asp-controller="Entry" asp-action="Details" asp-route-id="@item.FieldId">Wpisy</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</div>
+</div>
+
+  
+</div>
+
