@@ -52,34 +52,21 @@
                       <li class="nav-item ">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Rejestracja</a>
                        </li>
-
-                       <li class="nav-item ">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="LogOut">Wyloguj</a>
-                       </li>
                        <li class="nav-item ">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Task" asp-action="Index">Zadania</a>
                        </li>
-                       }else{
-                       <li class="nav-item ">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Zaloguj</a>
-                       </li>
                        }
-                       <li class="nav-item">
-                            <p class="nav-link text-dark">@User.Identity.Name</p>
-                      </li>
+                       
                     </ul>
                 </div>
                 <div class="col-md-3 text-end"">
+                    @if(User.Identity.IsAuthenticated){
+                    <span>@User.Identity.Name</span>
+                    <input type="button" class="btn btn-outline-primary btn-sm m-0" value="Wyloguj" onclick="location.href='@Url.Action("LogOut", "Account", new {  id=ViewBag.UserId  })'" />
+                    }else{
+                    <input type="button" class="btn btn-outline-primary btn-sm m-0" value="Zaloguj" onclick="location.href='@Url.Action("Login", "Account", new {  id=ViewBag.UserId  })'" />
+                    }
                     
-                        <span>@User.Identity.Name</span>
-                    
-
-                    <button type="button" class="btn btn-outline-primary me-2">
-                        Zaloguj się
-                    </button>
-                    <button type="button" class="btn btn-outline-primary me-2">
-                        Wyloguj się
-                    </button>
                 </div>
             </div>
         </nav>

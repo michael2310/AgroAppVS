@@ -19,7 +19,8 @@ namespace AgroApp.Repositories.Interfaces
 
         public void DeleteTask(int taskId)
         {
-            throw new NotImplementedException();
+            _context.Tasks.Remove(_context.Tasks.SingleOrDefault(x => x.TaskId == taskId));
+            _context.SaveChanges();
         }
 
         public TaskModel GetTaskById(int taskId)
@@ -59,7 +60,16 @@ namespace AgroApp.Repositories.Interfaces
         }
         public void UpdateTask(int taskId, TaskModel task)
         {
-            throw new NotImplementedException();
+            var result = _context.Tasks.SingleOrDefault(x => x.TaskId == taskId);
+            if(result != null)
+            {
+                result.CreateDate = task.CreateDate;
+                result.ExpectedEndDate = task.ExpectedEndDate;
+                result.dateTime = task.dateTime;
+                result.Subject = task.Subject;
+                result.Description = task.Description;
+                _context.SaveChanges();
+            }
         }
     }
 }

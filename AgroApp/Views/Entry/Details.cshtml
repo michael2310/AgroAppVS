@@ -1,54 +1,39 @@
-﻿@model IEnumerable<AgroApp.Models.EntryModel>
+﻿@model AgroApp.Models.EntryModel
 
 @{
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>Szczegóły</h1>
 
-<p>
-    
-    <a asp-action="Create" asp-route-id="@ViewBag.Id">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.WorkType)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Date)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EntryInfo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Field)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.WorkType)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EntryInfo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Field.FieldId)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.EntryId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.EntryId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.EntryId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="col-sm col-md col-lg mx-auto">
+    <div class="card border-0 shadow rounded-3 my-5">
+        <div class="card-body p-4 p-sm-5">
+            <div>
+                <h4>Szczegóły wpisu</h4>
+                <hr />
+                <dl class="row">
+                    <dt class = "col-sm-2">
+                        @Html.DisplayNameFor(model => model.WorkType)
+                    </dt>
+                    <dd class = "col-sm-10">
+                        @Html.DisplayFor(model => model.WorkType)
+                    </dd>
+                    <dt class = "col-sm-2">
+                        @Html.DisplayNameFor(model => model.Date)
+                    </dt>
+                    <dd class = "col-sm-10">
+                        @Html.DisplayFor(model => model.Date)
+                    </dd>
+                    <dt class = "col-sm-2">
+                        @Html.DisplayNameFor(model => model.EntryInfo)
+                    </dt>
+                    <dd class = "col-sm-10">
+                        @Html.DisplayFor(model => model.EntryInfo)
+                    </dd>
+                </dl>
+            </div>
+<div>
+         <input type="button" class="btn btn-primary btn-sm m-0" value="Edycja" onclick="location.href='@Url.Action("Edit", "Entry", new{id = @Model?.EntryId})'" />
+    <input type="button" class="btn btn-primary btn-sm m-0" value="Powrót do listy" onclick="location.href='@Url.Action("Details", "Field", new {id = Model?.FieldId})'" />
+</div>

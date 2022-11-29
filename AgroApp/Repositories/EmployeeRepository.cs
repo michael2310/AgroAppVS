@@ -28,11 +28,12 @@ namespace AgroApp.Repositories
 
         public  IEnumerable<UserModel> GetEmployeesByFarmId(int farmId)
         {
-            List<UserModel> employees = new List<UserModel>();
+            List<UserModel> employees = new();
             foreach(UserModel employee in _userManager.Users)
             {
                 if(employee.FarmId == farmId)
                 {
+                    
                     employees.Add(employee);
                 }
             }

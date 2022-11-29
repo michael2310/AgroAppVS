@@ -4,15 +4,13 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Maszyny</h1>
 
-<p>
-    <a asp-action="Create" asp-route-id="@ViewBag.FarmId">Create New</a>
-</p>
+ <input type="button" class="btn btn-primary btn-sm m-0" value="Dodaj Maszynę" onclick="location.href='@Url.Action("Create", "Machine", new {  id=ViewBag.FarmId  })'" />
 
 <div class="card border-0 shadow rounded-3 my-5">
             <div class="card-body p-4 p-sm-5">
-<table class="table">
+<table class="table table-striped">
     <thead>
         <tr>
             <th>
@@ -36,25 +34,26 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
+            <td class="align-middle">
                 @Html.DisplayFor(modelItem => item.Brand)
             </td>
-            <td>
+            <td class="align-middle">
                 @Html.DisplayFor(modelItem => item.Model)
             </td>
-            <td>
+            <td class="align-middle">
                 @Html.DisplayFor(modelItem => item.ProductionYear)
             </td>
-            <td>
+            <td class="align-middle">
                 @Html.DisplayFor(modelItem => item.LastService)
             </td>
-            <td>
+            <td class="align-middle">
                 @Html.DisplayFor(modelItem => item.Farm.FarmId)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.MachineId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.MachineId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.MachineId">Delete</a>
+                <input type="button" class="btn btn-primary btn-sm m-0" value="Szczegóły" onclick="location.href='@Url.Action("Details", "Machine", new {  id=item.MachineId  })'" />
+                <input type="button" class="btn btn-warning btn-sm m-0" value="Edycja" onclick="location.href='@Url.Action("Edit", "Machine", new {  id=item.MachineId  })'" />
+                <input type="button" class="btn btn-danger btn-sm m-0" value="Usuń" onclick="location.href='@Url.Action("Delete", "Machine", new {  id=item.MachineId  })'" />
+  
             </td>
         </tr>
 }

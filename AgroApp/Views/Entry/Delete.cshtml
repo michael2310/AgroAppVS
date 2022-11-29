@@ -1,0 +1,51 @@
+﻿@model AgroApp.Models.EntryModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Usuwanie</h1>
+
+<
+<div>
+    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+        <div class="card border-0 shadow rounded-3 my-5">
+            <div class="card-body p-4 p-sm-5">
+                <h4>Usuń wpis</h4>
+                <hr />
+                <dl class="row">
+                    <dt class = "col-sm-2">
+                        @Html.DisplayNameFor(model => model.WorkType)
+                    </dt>
+                    <dd class = "col-sm-10">
+                        @Html.DisplayFor(model => model.WorkType)
+                    </dd>
+                    <dt class = "col-sm-2">
+                        @Html.DisplayNameFor(model => model.Date)
+                    </dt>
+                    <dd class = "col-sm-10">
+                        @Html.DisplayFor(model => model.Date)
+                    </dd>
+                    <dt class = "col-sm-2">
+                        @Html.DisplayNameFor(model => model.EntryInfo)
+                    </dt>
+                    <dd class = "col-sm-10">
+                        @Html.DisplayFor(model => model.EntryInfo)
+                    </dd>
+                    <dt class = "col-sm-2">
+                        @Html.DisplayNameFor(model => model.Field)
+                    </dt>
+                    <dd class = "col-sm-10">
+                        @Html.DisplayFor(model => model.Field.FieldId)
+                    </dd>
+                </dl>
+                <h5 class="text-center">Czy na pewno chcesz usunąć wpis?</h5>
+                <form class="text-center" asp-action="Delete">
+                    <input type="hidden" asp-for="EntryId" />
+                     <input type="submit" value="Tak" class="btn btn-danger" />
+                    <input type="button" class="btn btn-primary" value="Nie" onclick="location.href='@Url.Action("Index", "Field", new {id = Model.FieldId})'" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

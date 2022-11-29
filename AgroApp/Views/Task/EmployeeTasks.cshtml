@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<AgroApp.Models.TaskModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "EmployeeTasks";
 }
 
-<h1>Index</h1>
+<h1>Zadania pracownika</h1>
 
 <p>
-    <a asp-action="Create" asp-route-id="@ViewBag.FarmId">Create New</a>
+    <input type="button" class="btn btn-primary btn-sm m-0" value="Dodaj zadanie" onclick="location.href='@Url.Action("CreateForUser", "Task", new {  id=ViewBag.UserId  })'" />
 </p>
 
 <div class="card border-0 shadow rounded-3 my-5">
@@ -30,52 +30,31 @@
                     <th>
                         @Html.DisplayNameFor(model => model.dateTime)
                     </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.IsOpen)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.IsDone)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.User)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Farm)
-                    </th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
         @foreach (var item in Model) {
                 <tr>
-                    <td>
+                    <td class="align-middle">
                         @Html.DisplayFor(modelItem => item.Subject)
                     </td>
-                    <td>
+                    <td class="align-middle">
                         @Html.DisplayFor(modelItem => item.Description)
                     </td>
-                    <td>
+                    <td class="align-middle">
                         @Html.DisplayFor(modelItem => item.CreateDate)
                     </td>
-                    <td>
+                    <td class="align-middle">
                         @Html.DisplayFor(modelItem => item.ExpectedEndDate)
                     </td>
-                    <td>
+                    <td class="align-middle">
                         @Html.DisplayFor(modelItem => item.dateTime)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.IsOpen)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IsDone)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.User.Name)
-                    </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.TaskId">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.TaskId">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.TaskId">Delete</a>
+                        <input type="button" class="btn btn-primary btn-sm m-0" value="Szczegóły" onclick="location.href='@Url.Action("Details", "Task", new {  id=item.TaskId  })'" />
+                        <input type="button" class="btn btn-warning btn-sm m-0" value="Edytuj" onclick="location.href='@Url.Action("Edit", "Task", new {  id=item.TaskId  })'" />
+                        <input type="button" class="btn btn-danger btn-sm m-0" value="Usuń" onclick="location.href='@Url.Action("Delete", "Task", new {  id=item.TaskId  })'" />
                     </td>
                 </tr>
         }

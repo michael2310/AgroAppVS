@@ -9,37 +9,70 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Subject)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreateDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ExpectedEndDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.dateTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsOpen)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsDone)
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-            if (item.IsOpen == false)
-            {
-                <tr style="background-color:#FF0000">
-                    <td>
+
+
+<div class="card border-0 shadow rounded-3 my-5">
+    <div class="card-body p-4 p-sm-5">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Subject)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CreateDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ExpectedEndDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.dateTime)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.IsOpen)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.IsDone)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+        @foreach (var item in Model) {
+                    if (item.IsOpen == false)
+                    {
+                        <tr style="background-color:#FF0000">
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Subject)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CreateDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ExpectedEndDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.dateTime)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IsOpen)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IsDone)
+                            </td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.TaskId">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.TaskId">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@item.TaskId">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr style="background-color:#00FF00">
+                            <td>
                         @Html.DisplayFor(modelItem => item.Subject)
                     </td>
+
                     <td>
                         @Html.DisplayFor(modelItem => item.CreateDate)
                     </td>
@@ -61,36 +94,9 @@
                         <a asp-action="Delete" asp-route-id="@item.TaskId">Delete</a>
                     </td>
                 </tr>
+                }
             }
-            else
-            {
-                <tr style="background-color:#00FF00">
-                    <td>
-                @Html.DisplayFor(modelItem => item.Subject)
-            </td>
-
-            <td>
-                @Html.DisplayFor(modelItem => item.CreateDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ExpectedEndDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.dateTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsOpen)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsDone)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.TaskId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.TaskId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.TaskId">Delete</a>
-            </td>
-        </tr>
-        }
-}
-    </tbody>
-</table>
+            </tbody>
+        </table>
+    </div>
+</div>

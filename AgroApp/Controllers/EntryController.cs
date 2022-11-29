@@ -24,7 +24,7 @@ namespace AgroApp.Controllers
         public ActionResult Details(int id)
         {
             ViewBag.Id = id;
-            return View(_entryRepository.GetEntriesByFieldId(id));
+            return View(_entryRepository.GetEntryById(id));
         }
 
         // GET: EntryController/Create
@@ -53,19 +53,20 @@ namespace AgroApp.Controllers
         // GET: EntryController/Edit/5
         public ActionResult Edit(int id)
         {
-            
 
-            return View();
+            var res = _entryRepository.GetEntryById(id);
+            return View(_entryRepository.GetEntryById(id));
         }
 
         // POST: EntryController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, EntryModel entry)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                _entryRepository.UpdateEntry(id, entry);
+                return RedirectToAction("Details", "Field", new { id = entry.FieldId });
             }
             catch
             {
@@ -76,7 +77,7 @@ namespace AgroApp.Controllers
         // GET: EntryController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            return View(_entryRepository.GetEntryById(id));
         }
 
         // POST: EntryController/Delete/5
@@ -86,7 +87,9 @@ namespace AgroApp.Controllers
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                var fieldId = _entryRepository.GetEntryById(id).FieldId;
+                _entryRepository.DeleteEntry(id);
+                return RedirectToAction(nameof(Details), "Field", new {id = fieldId} );
             }
             catch
             {

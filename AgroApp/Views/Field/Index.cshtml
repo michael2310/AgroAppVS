@@ -11,52 +11,52 @@
 
 
 
-<div class="row">
        <h1>Spis pól</h1>
        <p>
-    <a asp-action="Create" asp-route-id="@ViewBag.FarmId">Dodaj działkę</a>
-</p>
+     <input type="button" class="btn btn-primary btn-sm m-0" value="Dodaj działkę" onclick="location.href='@Url.Action("Create", "Field", new {  id=ViewBag.FarmId  })'" />
+     </p>
 
-        <div class="card border-0 shadow rounded-3 my-5">
-            <div class="card-body p-4 p-sm-5">
-<table class="table">
-    <thead>
-        <tr>
+<div class="card border-0 shadow rounded-3 my-5">
+    <div class="card-body p-4 p-sm-5">
+        <table class="table table-striped">
+            <thead>
+                <tr>
             
-            <th>
-                @Html.DisplayNameFor(model => model.Number)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Number)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </th>
           
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr class="rows" onclick="location.href='@Url.Action("Details", "Entry", new{id = item.FieldId})'">
+                    <th>
+                        @Html.DisplayNameFor(model => model.Area)
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+        @foreach (var item in Model) {
+                <tr class="rows">
       
-            <td>
-                @Html.DisplayFor(modelItem => item.Number)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-         
-            <td>
-                @Html.ActionLink("Edit", "Edit", @item.FieldId) |
-                @Html.ActionLink("Details", "Details", new {  id=item.FieldId  }) |
-                @Html.ActionLink("Delete", "Delete", new {  id=item.FieldId  }) |
-                <a asp-controller="Entry" asp-action="Details" asp-route-id="@item.FieldId">Wpisy</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
-</div>
-</div>
+                    <td class="align-middle">
+                        @Html.DisplayFor(modelItem => item.Number)
+                    </td class="align-middle">
+                    <td class="align-middle">
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td class="align-middle">
+                    <td class="align-middle">
+                        @Html.DisplayFor(modelItem => item.Area)
+                   
+                    <td class="">
+                        <input type="button" class="btn btn-primary btn-sm m-0" value="Wpisy" onclick="location.href='@Url.Action("Details", "Field", new {  id=item.FieldId  })'" />
+                        <input type="button" class="btn btn-warning btn-sm m-0" value="Edytuj" onclick="location.href='@Url.Action("Edit", "Field", new {  id=item.FieldId  })'" />
+                        <input type="button" class="btn btn-danger btn-sm m-0" value="Usuń" onclick="location.href='@Url.Action("Delete", "Field", new {  id=item.FieldId  })'" />
+                    </td>
 
-  
+                </tr>
+        }
+            </tbody>
+        </table>
+    </div>
 </div>
 

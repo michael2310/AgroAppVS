@@ -1,26 +1,52 @@
-﻿@model IEnumerable<UserModel>
+﻿@model IEnumerable<AgroApp.Models.UserModel>
+
 @{
     ViewData["Title"] = "Index";
 }
 
 <h1>Pracownicy</h1>
- 
-<table class="table table-sm table-bordered">
-    <tr>
-        <th>Name</th>
-        <th>Surname</th>
-        <th>Login</th>
-        <th>Email</th>
-        <th>Position</th>
-    </tr>
-    @foreach (UserModel user in Model)
+
+<p>
+    @if (User.IsInRole("Administrator"))
     {
-        <tr>
-            <td>@user.Name</td>
-            <td>@user.Surname</td>
-            <td>@user.UserName</td>
-            <td>@user.Email</td>
-            <td>@user.Position</td>
-        </tr>
+        <input type="button" class="btn btn-primary btn-sm m-0" value="Dodaj pracownika" onclick="location.href='@Url.Action("Create", "Account")'" />
     }
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Surname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Position)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Surname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Position)
+            </td>
+            <td>
+                <input type="button" class="btn btn-primary btn-sm m-0" value="Zadania" onclick="location.href='@Url.Action("EmployeeTasks", "Task", new {  id=item.Id  })'" />
+                 <input type="button" class="btn btn-info btn-sm m-0" value="Szczegóły" onclick="location.href='@Url.Action("Details", "Account", new {  id=item.Id  })'" />
+                 @if(User.IsInRole("Administrator")){
+                  <input type="button" class="btn btn-warning btn-sm m-0" value="Edycja" onclick="location.href='@Url.Action("Edit", "Account", new {  id=item.Id  })'" />
+                 }
+            </td>
+        </tr>
+}
+    </tbody>
 </table>

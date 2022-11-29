@@ -58,7 +58,15 @@ namespace AgroApp.Repositories
 
         public void UpdateEntry(int entryId, EntryModel entry)
         {
-            throw new NotImplementedException();
+            var result = _context.Entries.SingleOrDefault(x => x.EntryId == entryId);
+            if (result != null)
+            {
+                result.WorkType = entry.WorkType;
+                result.EntryInfo = entry.EntryInfo;
+                result.Date = entry.Date;
+
+                _context.SaveChanges();
+            }
         }
     }
 }

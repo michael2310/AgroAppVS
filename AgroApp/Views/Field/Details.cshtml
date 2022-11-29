@@ -4,55 +4,68 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>Wpisy</h1>
 
-<div>
-    <h4>FieldModel</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FieldId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FieldId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Number)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Number)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Area)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Area)
-        </dd>
-    </dl>
-    <table class="table">
+
+<div class="card border-0 shadow rounded-3 my-5">
+    <div class="card-body p-4 p-sm-5">
+
+        <h4>Szczegóły działki</h4>
+        <hr />
+        <dl class="row">
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.Number)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.Number)
+            </dd>
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.Area)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.Area)
+            </dd>
+        </dl>
+    </div>
+</div>
+
+
+<div class="card border-0 shadow rounded-3 my-5">
+    <div class="card-body p-4 p-sm-5">
         <h1>Wpisy</h1>
-         <tr>
-            <th>Kolumna1</th>
-            <th>Kolumna2</th>
-            <th>Kolumna3</th>
-            <th>Kolumna4</th>
-        </tr>
-         @foreach (var item in Model.Entry)
-        {
+        <input type="button" class="btn btn-primary btn-sm m-0" value="Dodaj wpis" onclick="location.href='@Url.Action("Create", "Entry", new {  id=ViewBag.FieldId  })'" />
+        <table class="table table-striped">
+            <thead>                 
+                <tr>
+                    <th>Rodzaj pracy</th>
+                    <th>Informacje</th>
+                    <th>Data wykonania</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+                @foreach (var item in Model.Entry)
+            {
        
-            <tr>
-                <td>@Html.DisplayFor(m => item.EntryId)</td>
-                <td>@Html.DisplayFor(m => item.Date)</td>
-                <td>@Html.DisplayFor(m => item.EntryInfo)</td>
-            </tr>
-        }
-    </table>
+                <tr>
+                    <td class="align-middle">@Html.DisplayFor(m => item.EntryId)</td>
+                    <td class="align-middle">@Html.DisplayFor(m => item.EntryInfo)</td>
+                    <td class="align-middle">@Html.DisplayFor(m => item.Date)</td>
+                    <td class="">
+                        <input type="button" class="btn btn-primary btn-sm m-0" value="Szczegóły" onclick="location.href='@Url.Action("Details", "Entry", new {  id=item.EntryId  })'" />
+                        <input type="button" class="btn btn-warning btn-sm m-0" value="Edytuj" onclick="location.href='@Url.Action("Edit", "Entry", new {  id=item.EntryId  })'" />
+                        <input type="button" class="btn btn-danger btn-sm m-0" value="Usuń" onclick="location.href='@Url.Action("Delete", "Entry", new {  id=item.EntryId  })'" />
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
 </div>
 <div>
     @Html.ActionLink("Edit", "Edit", new { id = Model.FieldId }) |

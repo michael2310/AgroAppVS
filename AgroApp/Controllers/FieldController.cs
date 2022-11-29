@@ -50,8 +50,8 @@ namespace AgroApp.Controllers
 
 
             // GET: FieldController/Details/5
-            public ActionResult Details(int id)
-        {
+            public ActionResult Details(int id){
+            ViewBag.FieldId = id;
             return View(_fieldRepository.GetFieldById(id));
            /* if (id != 0)
             {

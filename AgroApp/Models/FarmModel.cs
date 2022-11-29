@@ -11,7 +11,9 @@ namespace AgroApp.Models
     {
         [Key]
         public int FarmId { get; set; }
+        [DisplayName("Nazwa farmy")]
         public String FarmName { get; set; }
+        [DisplayName("Status farmy")]
         public Boolean FarmStatus { get; set; }
         public ICollection<UserModel>? users { get; set; }
         public ICollection<TaskModel>? tasks { get; set; }

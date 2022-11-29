@@ -72,7 +72,7 @@ namespace AgroApp.Controllers
                 }
             }
             SelectList farmUsers = new SelectList(farmUsersDictionary, "Key", "Value");
-            ViewBag.FarmId = id;
+            ViewBag.FarmId =  id;
             ViewBag.FarmUsers = farmUsers;
             return View();
         }
@@ -94,19 +94,54 @@ namespace AgroApp.Controllers
             }
         }
 
+        // GET: TaskController/CreateForUser
+        [HttpGet]
+        async public Task<ActionResult> CreateForUser(string id)
+        {
+            ViewBag.UserId = id;
+            var employee = _userManager.Users.FirstOrDefault(x => x.Id == id);
+            if(employee != null)
+            {
+                ViewBag.FarmId = employee.FarmId;
+            }
+            else
+            {
+                ViewBag.FarmId = 0;
+            }
+            return View();
+        }
+
+
+        // POST: TaskController/CreateForUser
+        [HttpPost]
+        public ActionResult CreateForUser(TaskModel task)
+        {
+            try
+            {
+                task.CreateDate = DateTime.UtcNow;
+                _taskRepository.AddTask(task);
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
         // GET: TaskController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            return View(_taskRepository.GetTaskById(id));
         }
 
         // POST: TaskController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, TaskModel task)
         {
             try
             {
+                _taskRepository.UpdateTask(id, task);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -118,7 +153,7 @@ namespace AgroApp.Controllers
         // GET: TaskController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            return View(_taskRepository.GetTaskById(id));
         }
 
         // POST: TaskController/Delete/5
@@ -128,12 +163,21 @@ namespace AgroApp.Controllers
         {
             try
             {
+                _taskRepository.DeleteTask(id);
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
                 return View();
             }
+        }
+
+
+        [HttpGet]
+        public ActionResult EmployeeTasks(string id)
+        {
+            ViewBag.UserId = id;
+            return View(_taskRepository.GetTasksByUserId(id));
         }
     }
 }

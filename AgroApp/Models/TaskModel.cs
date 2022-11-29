@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel;
 
 namespace AgroApp.Models
 {
@@ -8,12 +9,19 @@ namespace AgroApp.Models
     {
         [Key]
         public int TaskId { get; set; }
+        [DisplayName("Temat")]
         public string Subject { get; set; }
+        [DisplayName("Opis")]
         public string Description { get; set; }
+        [DisplayName("Data utworzenia")]
         public DateTime CreateDate { get; set; }
+        [DisplayName("Przew. data zakończenia")]
         public DateTime ExpectedEndDate { get; set; }
+        [DisplayName("Data zakończenia")]
         public DateTime dateTime { get; set; }
+        [DisplayName("Otwarte")]
         public bool IsOpen { get; set; }
+        [DisplayName("Zakończone")]
         public bool IsDone { get; set; }
         public string? UserId { get; set; }
         public UserModel? User { get; set; }
