@@ -1,4 +1,5 @@
 ﻿using AgroApp.Models;
+using AgroApp.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -11,11 +12,14 @@ namespace AgroApp.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private UserManager<UserModel> _userManager;
+        private readonly IFarmRepository _farmRepository;
 
-        public HomeController(ILogger<HomeController> logger, UserManager<UserModel> userManager)
+        public HomeController(ILogger<HomeController> logger, UserManager<UserModel> userManager, IFarmRepository farmRepository)
         {
             _logger = logger;
             _userManager = userManager;
+            _farmRepository = farmRepository;
+           
         }
         
         [Authorize(Roles = "Farmer, Administrator")]
@@ -38,9 +42,16 @@ namespace AgroApp.Controllers
         }
 
 
-        public PartialViewResult FarmInfoPartial()
+        public async Task<PartialViewResult> FarmInfoPartial()
         {
-            return PartialView("_FarmInfo");
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            return PartialView("InfoFarmPartial", _farmRepository.GetFarmByUserId(user.Id));
+        }
+
+        public IActionResult part()
+        {
+            ViewBag.HEHE = "HEHE";
+            return PartialView("_part");
         }
     }
 }

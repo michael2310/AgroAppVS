@@ -18,6 +18,8 @@
 
 <div class="card border-0 shadow rounded-3 my-5">
     <div class="card-body p-4 p-sm-5">
+        @if (Model != null)
+                {
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -35,28 +37,33 @@
                 </tr>
             </thead>
             <tbody>
-        @foreach (var item in Model) {
-                <tr class="rows">
-      
-                    <td class="align-middle">
-                        @Html.DisplayFor(modelItem => item.Number)
-                    </td class="align-middle">
-                    <td class="align-middle">
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td class="align-middle">
-                    <td class="align-middle">
-                        @Html.DisplayFor(modelItem => item.Area)
-                   
-                    <td class="">
-                        <input type="button" class="btn btn-primary btn-sm m-0" value="Wpisy" onclick="location.href='@Url.Action("Details", "Field", new {  id=item.FieldId  })'" />
-                        <input type="button" class="btn btn-warning btn-sm m-0" value="Edytuj" onclick="location.href='@Url.Action("Edit", "Field", new {  id=item.FieldId  })'" />
-                        <input type="button" class="btn btn-danger btn-sm m-0" value="Usuń" onclick="location.href='@Url.Action("Delete", "Field", new {  id=item.FieldId  })'" />
-                    </td>
+                    @foreach (var item in Model)
+                    {
+                        <tr class="rows">
 
-                </tr>
-        }
+                            <td class="align-middle">
+                                @Html.DisplayFor(modelItem => item.Number)
+                            </td class="align-middle">
+                            <td class="align-middle">
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td class="align-middle">
+                            <td class="align-middle">
+                                @Html.DisplayFor(modelItem => item.Area)
+
+                                <td class="">
+                                    <input type="button" class="btn btn-primary btn-sm m-0" value="Wpisy" onclick="location.href='@Url.Action("Details", "Field", new {  id=item.FieldId  })'" />
+                                    <input type="button" class="btn btn-warning btn-sm m-0" value="Edytuj" onclick="location.href='@Url.Action("Edit", "Field", new {  id=item.FieldId  })'" />
+                                    <input type="button" class="btn btn-danger btn-sm m-0" value="Usuń" onclick="location.href='@Url.Action("Delete", "Field", new {  id=item.FieldId  })'" />
+                                </td>
+
+                        </tr>
+                    }
             </tbody>
         </table>
+         } else
+                {
+                   <h1>Brak danych do wyświetlenia</h1>
+                        }
     </div>
 </div>
 

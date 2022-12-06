@@ -20,8 +20,8 @@ namespace AgroApp.Models
         public double Area { get; set; }
 
         [ForeignKey("Farm")]
-        public int? FarmId { get; set; }
-        public FarmModel? Farm { get; set; }
+        public int FarmId { get; set; }
+        public FarmModel Farm { get; set; }
         public ICollection<EntryModel> Entry { get; set; }
 
         public static explicit operator List<object>(FieldModel v)

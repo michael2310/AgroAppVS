@@ -12,12 +12,14 @@ namespace AgroApp.Controllers
     public class FarmController : Controller
     {
         private readonly IFarmRepository _farmRepository;
+        private readonly IFieldRepository _fieldRepository;
         private readonly UserManager<UserModel> _userManager;
        
-        public FarmController(IFarmRepository farmRepository, UserManager<UserModel> userManager)
+        public FarmController(IFarmRepository farmRepository, IFieldRepository fieldRepository, UserManager<UserModel> userManager)
         {
             _farmRepository = farmRepository;
             _userManager = userManager;
+            _fieldRepository = fieldRepository;
         }
 
         [Authorize]
@@ -66,7 +68,15 @@ namespace AgroApp.Controllers
                 {
                     FarmModel farm;
                     farm = _farmRepository.GetFarmByUserId(user.Id);
-                    
+                    var fieldList = _fieldRepository.GetFieldsByFarmId(farm.FarmId);
+                    double area = 0;
+                    ViewBag.FieldCount = fieldList.Count().ToString();
+                    foreach(var field in fieldList)
+                    {
+                        area += field.Area;
+                    }
+                    ViewBag.AreaCount = area.ToString();
+
                     return View(farm);
                 }
                 catch

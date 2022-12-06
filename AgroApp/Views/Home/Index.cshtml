@@ -1,60 +1,93 @@
-﻿@model string
+﻿@using AgroApp.Controllers
+@model string
 @{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Witaj</h1>
-    <h2>@Model</h2>
-    @if (User?.Identity?.IsAuthenticated ?? false)
+<link rel="stylesheet" href="~/css/home.css"/>
+
+
+@if (User?.Identity?.IsAuthenticated ?? false)
 {
-    <a asp-controller="Account" asp-action="Logout" class="btn btn-danger">Logout</a>
-}
-    <div class="container text-center">
-      <div class="row">
-        <div class="col">
-          1 of 2
-        </div>
-        <div class="col">
-          2 of 2
-        </div>
-        <div class="col">
-          3 of 3
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          1 of 3
-        </div>
-        <div class="col">
-          2 of 3
-        </div>
-        <div class="col">
-          3 of 3
-        </div>
-       </div>
-       </div>
-    </div>
 
-    <button onclick="LoadContent()">
-        KLIK
-    </button>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="col-sm-4 col-md-4 col-lg-4 mx-auto zoom">
+                    <div class="card border-0 shadow rounded-3 my-5">
+                        <div class="card-body p-4 p-sm-5">
+                            <div class="text-center">
+                                <img src="~/agroapp_black_logo.png" class="card-img"/>
+                            </div>
+                            <div class="text-center">
+                                <h5 class="card-title">Witaj @Model! </h5>
+                                <a asp-controller="Account" asp-action="Logout" class="btn btn-danger text-center">Wyloguj</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="col-sm col-md col-lg mx-auto  zoom">
+                    <div class="card border-0 shadow rounded-3 h-100 zoom-color">
+                         <img class="card-img-top" src="~/pexels-pixabay-265216.jpg"/>
+                        <div class="card-body">
+                            <h5 class="card-title">Ewidencja</h5>
+                            <p class="card-text">Zarządzanie ewidencją prac</p>
+                            <a class="nav-link text-dark stretched-link" asp-area="" asp-controller="Field" asp-action="Index"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="col-sm col-md col-lg mx-auto zoom">
+                    <div class="card border-0 shadow rounded-3 h-100 zoom-color">
+                        <img class="card-img-top" src="~/pexels-jannis-knorr-2933243.jpg"/>
+                        <div class="card-body">
+                            
+                            
+                            <h5 class="card-title">Maszyny</h5>
+                            <p class="card-text">Zarządzanie parkiem maszynowym</p>
+                            <a class="nav-link text-dark stretched-link" asp-area="" asp-controller="Machine" asp-action="Index"></a>
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-    <div id="partialFarm"></div>
+            <div class="col">
+                <div class="col-sm col-md col-lg mx-auto zoom">
+                    <div class="card border-0 shadow rounded-3 h-100 zoom-color">
+                         <img class="card-img-top" src="~/pexels-leeloo-thefirst-5386754.jpg"/>
+                        <div class="card-body">
+                            <h5 class="card-title">Pracownicy i zadania</h5>
+                            <p class="card-text">Przydzielanie zadań pracownikom</p>
+                            <a class="nav-link text-dark stretched-link" asp-area="" asp-controller="Employee" asp-action="Index"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-
-        <script type="text/javascript">  
-            $.ajax ({  
-                url: '/ Home/FarmInfoPartial',  
-                contentType: 'application/html; charset=utf-8',  
-                type: 'GET',  
-                dataType: 'html'  
-                })  
-                .success (function (result) {  
-                $('#partialFarm').html(result);  
-                })  
-                .error(function (xhr, status) {  
-                alert(status);  
-            })  
         
-    </script>
+        </div>
+    </div>
+}
+
+ <script>
+$.ajax({
+          url: '@Url.Action("part", "Home")',
+          type: "get",
+          processData: false,
+          data: { type: $(this).attr("data-type") },
+          dataType: "html",
+          contentType: false,
+          success: function (data) {
+              $(".content").html(response);
+          },
+          error: function () {
+              alert("Problem on uploading file");
+          }
+      });
+      </script>

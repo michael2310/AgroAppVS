@@ -121,7 +121,7 @@ namespace AgroApp.Migrations
                     b.Property<double>("Area")
                         .HasColumnType("float");
 
-                    b.Property<int?>("FarmId")
+                    b.Property<int>("FarmId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -160,6 +160,9 @@ namespace AgroApp.Migrations
                     b.Property<string>("Model")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("NextService")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("ProductionYear")
                         .HasColumnType("int");
@@ -470,7 +473,9 @@ namespace AgroApp.Migrations
                 {
                     b.HasOne("AgroApp.Models.FarmModel", "Farm")
                         .WithMany("fields")
-                        .HasForeignKey("FarmId");
+                        .HasForeignKey("FarmId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Farm");
                 });

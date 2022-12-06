@@ -65,8 +65,10 @@ namespace AgroApp.Controllers
 
 
         // GET: FieldController/Create
-        public ActionResult Create(int id)
+        async public Task<ActionResult> Create(int id)
         {
+            //var user = await _userManager.GetUserAsync(HttpContext.User);
+           // ViewBag.FarmId = _farmRepository.GetFarmByUserId(user.Id).FarmId;
             ViewBag.FarmId = id;
             return View();
         }
@@ -76,9 +78,15 @@ namespace AgroApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(FieldModel fieldModel)
         {
-            _fieldRepository.AddField(fieldModel);
+                foreach (FieldModel field in _fieldRepository.GetFieldsByFarmId(fieldModel.FarmId))
+                {
+                    if (field.Number == fieldModel.Number)
+                    {
+                        ModelState.AddModelError(nameof(fieldModel.Number), "Ten numer działki już istnieje");
+                    }
+                }
+                _fieldRepository.AddField(fieldModel);
             return RedirectToAction(nameof(Index));
-      
         }
 
         // GET: FieldController/Edit/5

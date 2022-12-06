@@ -48,8 +48,6 @@ namespace AgroApp.Controllers
         {
             if (ModelState.IsValid)
             {
-
-
                 UserModel user = await _userManager.FindByNameAsync(loginModel.Login);
                 if (user != null)
                 {
@@ -60,7 +58,7 @@ namespace AgroApp.Controllers
                         return RedirectToAction("Index", "Home");
                     }
                 }
-                ModelState.AddModelError(nameof(loginModel.Login), "Niepoprawny login lub hasło");
+                ModelState.AddModelError(nameof(loginModel.Password), "Niepoprawny login lub hasło");
             }
             return View(loginModel);
         }

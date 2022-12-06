@@ -1,0 +1,39 @@
+﻿.zoom{
+    transition: transform 0.3s ease;
+}
+
+.zoom:hover{
+    transform: scale(1.05);
+}
+
+.zoom-color {
+    transition: 0.3s ease-out;
+}
+
+.zoom-color:hover {
+    background-color: #26282b;
+    color: white;
+}
+
+.zoom-border {
+    transition: 0.3s ease-out;
+    border: 1px solid black;
+}
+
+.zoom-border:hover {
+    border-bottom: 2px solid #26282b;
+}
+
+
+.nav-item::after {
+    content: '';
+    display: block;
+    width: 0px;
+    height: 2px;
+    background: #26282b;
+    transition: 0.3s
+}
+
+.nav-item:hover::after {
+    width: 100%;
+}
