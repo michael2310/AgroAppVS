@@ -4,6 +4,7 @@ using AgroApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AgroApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221207023744_AddDisplayNames")]
+    partial class AddDisplayNames
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -175,31 +177,6 @@ namespace AgroApp.Migrations
                     b.HasIndex("FarmId");
 
                     b.ToTable("Machines");
-                });
-
-            modelBuilder.Entity("AgroApp.Models.MachineServiceModel", b =>
-                {
-                    b.Property<int>("ServiceId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ServiceId"), 1L, 1);
-
-                    b.Property<int>("MachineId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("ServiceDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ServiceInfo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ServiceId");
-
-                    b.HasIndex("MachineId");
-
-                    b.ToTable("Service");
                 });
 
             modelBuilder.Entity("AgroApp.Models.TaskModel", b =>
@@ -510,15 +487,15 @@ namespace AgroApp.Migrations
                         {
                             Id = "7b6c29c2-68a5-41b2-99bb-bdffade561fa",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "30f7ceda-9f08-469e-9a33-b68620597660",
+                            ConcurrencyStamp = "7a0f68aa-b9f8-48a0-b795-767274066a44",
                             Email = "admin@test.pl",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@TEST.PL",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAECovgSCoBJOud/BN/NBrcsHt5xNvgdSKabdseJB5bVd2sJgV68YIFZ2rtOFP0h0/BA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEGrFhvMQ2Xqs+2Q40u2WTjuOdBGNpsZnu3nrXYIF0SWBp1BfAaakGKOoUNqdX3tMIg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "2df95701-44ec-4f62-8167-63cf16344c1a",
+                            SecurityStamp = "0d1f9224-8e39-43c8-992e-41646e6dff15",
                             TwoFactorEnabled = false,
                             UserName = "Admin",
                             Name = "Admin",
@@ -566,17 +543,6 @@ namespace AgroApp.Migrations
                         .HasForeignKey("FarmId");
 
                     b.Navigation("Farm");
-                });
-
-            modelBuilder.Entity("AgroApp.Models.MachineServiceModel", b =>
-                {
-                    b.HasOne("AgroApp.Models.MachineModel", "Machine")
-                        .WithMany("Services")
-                        .HasForeignKey("MachineId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Machine");
                 });
 
             modelBuilder.Entity("AgroApp.Models.TaskModel", b =>
@@ -668,11 +634,6 @@ namespace AgroApp.Migrations
             modelBuilder.Entity("AgroApp.Models.FieldModel", b =>
                 {
                     b.Navigation("Entry");
-                });
-
-            modelBuilder.Entity("AgroApp.Models.MachineModel", b =>
-                {
-                    b.Navigation("Services");
                 });
 
             modelBuilder.Entity("AgroApp.Models.UserModel", b =>

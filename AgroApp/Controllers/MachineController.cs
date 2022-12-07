@@ -51,6 +51,7 @@ namespace AgroApp.Controllers
         // GET: MachineController/Details/5
         public ActionResult Details(int id)
         {
+            ViewBag.MachineId = id;
             return View(_machineRepository.GetMachineById(id));
         }
 

@@ -19,14 +19,12 @@ namespace AgroApp.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime LastService { get; set; }
-        [DisplayName("Następny serwis")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
-        public DateTime NextService { get; set; }
 
         [ForeignKey("Farm")]
         public int? FarmId { get; set; }
         public FarmModel? Farm { get; set; }
+
+        public ICollection<MachineServiceModel> Services { get; set; }
 
     }
 }

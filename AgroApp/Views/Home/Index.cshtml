@@ -14,8 +14,8 @@
         <div class="row">
             <div class="col">
                 <div class="col-sm-4 col-md-4 col-lg-4 mx-auto zoom">
-                    <div class="card border-0 shadow rounded-3 my-5">
-                        <div class="card-body p-4 p-sm-5">
+                    
+                        <div class="p-4 p-sm-5">
                             <div class="text-center">
                                 <img src="~/agroapp_black_logo.png" class="card-img"/>
                             </div>
@@ -24,54 +24,97 @@
                                 <a asp-controller="Account" asp-action="Logout" class="btn btn-danger text-center">Wyloguj</a>
                             </div>
                         </div>
-                    </div>
+                    
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col">
-                <div class="col-sm col-md col-lg mx-auto  zoom">
-                    <div class="card border-0 shadow rounded-3 h-100 zoom-color">
-                         <img class="card-img-top" src="~/pexels-pixabay-265216.jpg"/>
-                        <div class="card-body">
-                            <h5 class="card-title">Ewidencja</h5>
-                            <p class="card-text">Zarządzanie ewidencją prac</p>
-                            <a class="nav-link text-dark stretched-link" asp-area="" asp-controller="Field" asp-action="Index"></a>
+        @if (User.IsInRole("Administrator"))
+        {
+             <div class="row">
+                <div class="col">
+                    <div class="col-sm col-md col-lg mx-auto  zoom">
+                        <div class="card border-0 shadow rounded-3 h-100 zoom-color">
+                             <img class="card-img-top" src="/pexels-burak-aydin-219376.jpg"/>
+                            <div class="card-body">
+                                <h5 class="card-title">Gospodarstwa</h5>
+                                <p class="card-text">Zarządzanie gospodarstwami</p>
+                                <a class="nav-link text-dark stretched-link" asp-area="" asp-controller="Farm" asp-action="Index"></a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col">
-                <div class="col-sm col-md col-lg mx-auto zoom">
-                    <div class="card border-0 shadow rounded-3 h-100 zoom-color">
-                        <img class="card-img-top" src="~/pexels-jannis-knorr-2933243.jpg"/>
-                        <div class="card-body">
-                            
-                            
-                            <h5 class="card-title">Maszyny</h5>
-                            <p class="card-text">Zarządzanie parkiem maszynowym</p>
-                            <a class="nav-link text-dark stretched-link" asp-area="" asp-controller="Machine" asp-action="Index"></a>
+                <div class="col">
+                    <div class="col-sm col-md col-lg mx-auto zoom">
+                        <div class="card border-0 shadow rounded-3 h-100 zoom-color">
+                            <img class="card-img-top" src="/christin-hume-Hcfwew744z4-unsplash.jpg"/>
+                            <div class="card-body">
+                                <h5 class="card-title">Użytkownicy</h5>
+                                <p class="card-text">Zarządzanie kontami użytkowników</p>
+                                <a class="nav-link text-dark stretched-link" asp-area="" asp-controller="Account" asp-action="Index"></a>
                            
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="col-sm col-md col-lg mx-auto zoom">
+                        <div class="card border-0 shadow rounded-3 h-100 zoom-color">
+                             <img class="card-img-top" src="/pexels-pixabay-532173.jpg"/>
+                            <div class="card-body">
+                                <h5 class="card-title">Rejestracja</h5>
+                                <p class="card-text">Utworzenie nowego konta użytkownika</p>
+                                <a class="nav-link text-dark stretched-link" asp-area="" asp-controller="Account" asp-action="Register"></a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+        }else if (User.IsInRole("Farmer"))
+        {
+            <div class="row">
+                <div class="col">
+                    <div class="col-sm col-md col-lg mx-auto  zoom">
+                        <div class="card border-0 shadow rounded-3 h-100 zoom-color">
+                             <img class="card-img-top" src="~/pexels-pixabay-265216.jpg"/>
+                            <div class="card-body">
+                                <h5 class="card-title">Ewidencja</h5>
+                                <p class="card-text">Zarządzanie ewidencją prac</p>
+                                <a class="nav-link text-dark stretched-link" asp-area="" asp-controller="Field" asp-action="Index"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="col-sm col-md col-lg mx-auto zoom">
+                        <div class="card border-0 shadow rounded-3 h-100 zoom-color">
+                            <img class="card-img-top" src="~/pexels-jannis-knorr-2933243.jpg"/>
+                            <div class="card-body">
+                            
+                            
+                                <h5 class="card-title">Maszyny</h5>
+                                <p class="card-text">Zarządzanie parkiem maszynowym</p>
+                                <a class="nav-link text-dark stretched-link" asp-area="" asp-controller="Machine" asp-action="Index"></a>
+                           
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="col">
-                <div class="col-sm col-md col-lg mx-auto zoom">
-                    <div class="card border-0 shadow rounded-3 h-100 zoom-color">
-                         <img class="card-img-top" src="~/pexels-leeloo-thefirst-5386754.jpg"/>
-                        <div class="card-body">
-                            <h5 class="card-title">Pracownicy i zadania</h5>
-                            <p class="card-text">Przydzielanie zadań pracownikom</p>
-                            <a class="nav-link text-dark stretched-link" asp-area="" asp-controller="Employee" asp-action="Index"></a>
+                <div class="col">
+                    <div class="col-sm col-md col-lg mx-auto zoom">
+                        <div class="card border-0 shadow rounded-3 h-100 zoom-color">
+                             <img class="card-img-top" src="~/pexels-leeloo-thefirst-5386754.jpg"/>
+                            <div class="card-body">
+                                <h5 class="card-title">Pracownicy i zadania</h5>
+                                <p class="card-text">Przydzielanie zadań pracownikom</p>
+                                <a class="nav-link text-dark stretched-link" asp-area="" asp-controller="Employee" asp-action="Index"></a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-        
-        </div>
+        }
     </div>
 }
 

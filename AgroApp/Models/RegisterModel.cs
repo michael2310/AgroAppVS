@@ -25,7 +25,11 @@ namespace AgroApp.Models
         public string Position { get; set; }
 
         //powiazanie z gospodarstwem
-        
+        [DisplayName("Gospodarstwo")]
         public int? FarmId { get; set; }
+
+        [Required]
+        [DisplayName("Typ konta")]
+        public string RoleName { get; set; }
     }
 }

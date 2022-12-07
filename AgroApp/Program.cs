@@ -48,6 +48,7 @@ builder.Services.AddTransient<IFarmRepository, FarmRepository>();
 builder.Services.AddTransient<IEntryRepository, EntryRepository>();
 builder.Services.AddTransient<IMachineRepository, MachineRepository>();
 builder.Services.AddTransient<ITaskRepository, TaskRepository>();
+builder.Services.AddTransient<IMachineServiceRepository, MachineServiceRepository>();
 
 builder.Services.AddMvc();
 
@@ -76,7 +77,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Account}/{action=Login}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
 
 app.Run();

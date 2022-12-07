@@ -23,9 +23,10 @@ namespace AgroApp.Models
         public ICollection<MachineModel>? Machines { get; set; }
 
         [ForeignKey("FarmOwner")]
-       
+        [DisplayName("Właściciel")]
         public string? FarmOwnerId { get; set; }
-        
+        [DisplayName("Właściciel")]
+        public string? FarmOwnerName { get; set; }
         public UserModel? FarmOwner { get; set; }
 
     }

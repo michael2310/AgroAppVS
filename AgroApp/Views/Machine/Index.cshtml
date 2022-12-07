@@ -50,7 +50,7 @@
                 @Html.DisplayFor(modelItem => item.Farm.FarmId)
             </td>
             <td>
-                <input type="button" class="btn btn-primary btn-sm m-0" value="Szczegóły" onclick="location.href='@Url.Action("Details", "Machine", new {  id=item.MachineId  })'" />
+                <input type="button" class="btn btn-primary btn-sm m-0" value="Przeglądy" onclick="location.href='@Url.Action("Details", "Machine", new {  id=item.MachineId  })'" />
                 <input type="button" class="btn btn-warning btn-sm m-0" value="Edycja" onclick="location.href='@Url.Action("Edit", "Machine", new {  id=item.MachineId  })'" />
                 <input type="button" class="btn btn-danger btn-sm m-0" value="Usuń" onclick="location.href='@Url.Action("Delete", "Machine", new {  id=item.MachineId  })'" />
   

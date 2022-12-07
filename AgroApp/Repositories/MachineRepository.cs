@@ -1,6 +1,7 @@
 ﻿using AgroApp.Data;
 using AgroApp.Models;
 using AgroApp.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace AgroApp.Repositories
 {
@@ -27,7 +28,7 @@ namespace AgroApp.Repositories
 
         public MachineModel GetMachineById(int machineId)
         {
-            return _context.Machines.SingleOrDefault(x => x.MachineId == machineId);
+            return _context.Machines.Include(m => m.Services).SingleOrDefault(x => x.MachineId == machineId);
         }
 
         public IEnumerable<MachineModel> GetMachines()

@@ -12,8 +12,8 @@ using System.ComponentModel.DataAnnotations.Schema;
             public String WorkType { get; set; }
             [DisplayName("Data wykonania")]
             public DateTime Date { get; set; }
-            public String EntryInfo { get; set; }
             [DisplayName("Szczegóły")]
+            public String EntryInfo { get; set; }
             public int FieldId { get; set; }
             public FieldModel Field { get; set; }
        

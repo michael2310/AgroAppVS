@@ -59,8 +59,8 @@ namespace AgroApp.Controllers
                 List<UserModel> employees = new List<UserModel>();
 
                 ViewBag.Employees = employees;
-
-                return View(_farmRepository.GetFarmById(id));
+                var farm = _farmRepository.GetFarmById(id);
+                return View(farm);
             }else if (User.IsInRole("Farmer"))
             {
                 var user = await _userManager.GetUserAsync(HttpContext.User);
@@ -98,9 +98,13 @@ namespace AgroApp.Controllers
         // POST: FarmController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(FarmModel farmModel)
+        public async Task<ActionResult> Create(FarmModel farmModel)
         {
-            
+            if(farmModel.FarmOwnerId != null)
+            {
+                var owner = await _userManager.FindByIdAsync(farmModel.FarmOwnerId);
+                farmModel.FarmOwnerName = owner.Name + " " + owner.Surname;
+            }
             _farmRepository.AddFarm(farmModel);
             return RedirectToAction(nameof(Index));
         }
@@ -126,12 +130,17 @@ namespace AgroApp.Controllers
         // POST: FarmController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, FarmModel farmModel)
+        public async Task <ActionResult> Edit(int id, FarmModel farmModel)
         {
             if (farmModel != null)
             {
                 try
                 {
+                    if (farmModel.FarmOwnerId != null)
+                    {
+                        var owner = await _userManager.FindByIdAsync(farmModel.FarmOwnerId);
+                        farmModel.FarmOwnerName = owner.Name + " " + owner.Surname;
+                    }
                     _farmRepository.UpdateFarm(id, farmModel);
                     return RedirectToAction(nameof(Index));
                 }

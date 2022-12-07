@@ -29,34 +29,37 @@
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Farm" asp-action="Index">Gospodarstwa</a>
                                 </li>
+                                <li class="nav-item ">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Index">Użytkownicy</a>
+                                </li>
+                                <li class="nav-item ">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Rejestracja</a>
+                                </li>
+
                             }else if (User.IsInRole("Farmer"))
                             {
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Farm" asp-action="Details">Gospodarstwa</a>
                                 </li>
+                                <li class="nav-item ">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Field" asp-action="Index">Ewidencja</a>
+                                </li>
+                                <li class="nav-item ">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Machine" asp-action="Index">Maszyny</a>
+                                </li>
+                                <li class="nav-item ">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="Index">Pracownicy</a>
+                                </li>
+                                <li class="nav-item ">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Task" asp-action="Index">Zadania</a>
+                                </li>
+                            }else if (User.IsInRole("Employee"))
+                            {
+                                <li class="nav-item ">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Task" asp-action="Index">Zadania</a>
+                                </li>
                             }
-
-                       <li class="nav-item ">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Field" asp-action="Index">Ewidencja</a>
-                       </li>
-                       <li class="nav-item ">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="Index">Pracownicy</a>
-                       </li>
-                      <li class="nav-item ">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Machine" asp-action="Index">Maszyny</a>
-                       </li>
-                       
-                         <li class="nav-item ">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Index">Użytkownicy</a>
-                       </li>
-                       
-                      <li class="nav-item ">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Rejestracja</a>
-                       </li>
-                       <li class="nav-item ">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Task" asp-action="Index">Zadania</a>
-                       </li>
-                       }
+                        }
                        
                     </ul>
                 </div>
@@ -78,9 +81,9 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="footer text-muted" id="footer">
         <div class="container">
-            &copy; 2022 - AgroApp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2022 - AgroApp
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

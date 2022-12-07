@@ -1,45 +1,51 @@
 ﻿@model IEnumerable<AgroApp.Models.FarmModel>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <input type="button" class="btn btn-primary btn-sm m-0" value="Dodaj gospodarstwo" onclick="location.href='@Url.Action("Create", "Farm")'" />
 </p>
 
-<div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-        <div class="card border-0 shadow rounded-3 my-5">
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FarmName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FarmStatus)
-            </th>
-            <th>
-               <!--Html.DisplayNameFor(model => model.FarmOwner)-->-->
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FarmName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FarmStatus)
-            </td>
-            <td>
-               <!--  Html.DisplayFor(modelItem => item.FarmOwner)-->
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.FarmId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.FarmId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.FarmId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
-</div>
+<h1>Gospodarstwa</h1>
+
+<div class="col-sm col-md col-lg mx-auto">
+    <div class="card border-0 shadow rounded-3 my-5">
+        <div class="card-body p-4 p-sm-5">
+            <table class="table table-stripped">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.FarmName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.FarmStatus)
+                        </th>
+                        <th>
+                           @Html.DisplayNameFor(model => model.FarmOwnerName)
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+            @foreach (var item in Model) {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FarmName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FarmStatus)
+                        </td>
+                        <td>
+                           @Html.DisplayFor(modelItem => item.FarmOwnerName)
+                        </td>
+                        <td>
+             
+                            <input type="button" class="btn btn-primary btn-sm m-0" value="Szczegóły" onclick="location.href='@Url.Action("Details", "Farm", new {  id=item.FarmId  })'" />
+                            <input type="button" class="btn btn-warning btn-sm m-0" value="Edytuj" onclick="location.href='@Url.Action("Edit", "Farm", new {  id=item.FarmId  })'" />
+                            <input type="button" class="btn btn-danger btn-sm m-0" value="Usuń" onclick="location.href='@Url.Action("Delete", "Farm", new {  id=item.FarmId  })'" />
+                        </td>
+            
+                    </tr>
+            }
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>

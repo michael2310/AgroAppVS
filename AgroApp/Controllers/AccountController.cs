@@ -12,14 +12,16 @@ namespace AgroApp.Controllers
     {
         private readonly UserManager<UserModel> _userManager;
         private readonly SignInManager<UserModel> _signInManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private IPasswordHasher<UserModel> _passwordHasher;
         private IFarmRepository _farmRepository;
 
-        public AccountController(UserManager<UserModel> userManager, SignInManager<UserModel> signInManager,
+        public AccountController(UserManager<UserModel> userManager, SignInManager<UserModel> signInManager, RoleManager<IdentityRole> roleManager,
             IPasswordHasher<UserModel> passwordHasher, IFarmRepository farmRepository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _roleManager = roleManager;
             _passwordHasher = passwordHasher;
             _farmRepository = farmRepository;
         }
@@ -38,7 +40,7 @@ namespace AgroApp.Controllers
         [AllowAnonymous]
         public IActionResult Login()
         {
-            return View();
+                return View();  
         }
 
         [HttpPost]
@@ -86,17 +88,22 @@ namespace AgroApp.Controllers
             var farmsDictionary = new Dictionary<int, string>();
             //null nie działa - Przekazywany jest tekst
             farmsDictionary.Add(0, "brak");
-
             foreach (FarmModel farm in farmlist)
             {
                 farmsDictionary.Add(farm.FarmId, farm.FarmName);
             }
-
             SelectList farmsSelectList = new SelectList(farmsDictionary, "Key", "Value");
-
             ViewBag.Farms = farmsSelectList;
             //ViewBag.Farms = FarmSelectList;
 
+            var roleList = _roleManager.Roles;
+            var rolesDictionary = new Dictionary<string, string>();
+            foreach(var role in roleList)
+            {
+                rolesDictionary.Add(role.Name, role.Name);
+            }
+            SelectList rolesSelectList = new SelectList(rolesDictionary, "Key", "Value");
+            ViewBag.Roles = rolesSelectList;
 
             return View();
         }
@@ -139,8 +146,8 @@ namespace AgroApp.Controllers
                 }
 
               IdentityResult result = await _userManager.CreateAsync(newUser, registerModel.Password);
-
-                if(result.Succeeded)
+              IdentityResult roleResult = await _userManager.AddToRoleAsync(newUser, registerModel.RoleName);
+                if (result.Succeeded && roleResult.Succeeded)
                     return RedirectToAction("Index", "Account");
                 else
                 {
@@ -157,7 +164,7 @@ namespace AgroApp.Controllers
         public async Task<IActionResult> Edit(string id)
         {
             UserModel user = await _userManager.FindByIdAsync(id);
-
+            var userRole = await _userManager.GetRolesAsync(user);
             //ViewData do gospodarstw
            
 
@@ -175,7 +182,8 @@ namespace AgroApp.Controllers
                     UserName = user.UserName,
                     Email = user.Email,
                     Position = user.Position,
-                    FarmId = user.FarmId
+                    FarmId = user.FarmId,
+                    RoleName = userRole.ElementAt(0)
                 };
 
 
@@ -183,16 +191,21 @@ namespace AgroApp.Controllers
                 var farmsDictionary = new Dictionary<int, string>();
                 //null nie działa - Przekazywany jest tekst
                 farmsDictionary.Add(0, "brak");
-
                 foreach (FarmModel farm in farmlist)
                 {
                     farmsDictionary.Add(farm.FarmId, farm.FarmName);
                 }
-
                 SelectList farmsSelectList = new SelectList(farmsDictionary, "Key", "Value");
-
                 ViewBag.Farms = farmsSelectList;
 
+                var roleList = _roleManager.Roles;
+                var rolesDictionary = new Dictionary<string, string>();
+                foreach (var role in roleList)
+                {
+                    rolesDictionary.Add(role.Name, role.Name);
+                }
+                SelectList rolesSelectList = new SelectList(rolesDictionary, "Key", "Value");
+                ViewBag.Roles = rolesSelectList;
 
                 return View(registerModel);
             }
@@ -202,7 +215,8 @@ namespace AgroApp.Controllers
         public async Task<IActionResult> Edit(RegisterModel registerModel, string id, string email, string password)
         {
             UserModel user = await _userManager.FindByIdAsync(id);
-            if(user != null) {
+            var userRole = await _userManager.GetRolesAsync(user);
+            if (user != null) {
                 /* if (!string.IsNullOrEmpty(email))
                  {
                      user.Email = email;
@@ -250,7 +264,9 @@ namespace AgroApp.Controllers
                 }
 
                 IdentityResult result = await _userManager.UpdateAsync(user);
-                if (result.Succeeded)
+                IdentityResult resultRemoveRole = await _userManager.RemoveFromRoleAsync(user, userRole.ElementAt(0));
+                IdentityResult resultAddRole = await _userManager.AddToRoleAsync(user, registerModel.RoleName);
+                if (result.Succeeded && resultRemoveRole.Succeeded && resultAddRole.Succeeded)
                 {
                     return RedirectToAction("Index");
                 }
