@@ -18,7 +18,7 @@ namespace AgroApp.Models
         [DisplayName("Ostatni serwis")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
-        public DateTime LastService { get; set; }
+        public DateTime? LastService { get; set; }
 
         [ForeignKey("Farm")]
         public int? FarmId { get; set; }

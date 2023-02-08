@@ -24,9 +24,7 @@ namespace AgroApp.Models
         [DisplayName("Data zakończenia")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
-        public DateTime dateTime { get; set; }
-        [DisplayName("Otwarte")]
-        public bool IsOpen { get; set; }
+        public DateTime? dateTime { get; set; }
         [DisplayName("Zakończone")]
         public bool IsDone { get; set; }
         public string? UserId { get; set; }

@@ -4,6 +4,7 @@ using AgroApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AgroApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221208013639_n")]
+    partial class n
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -157,7 +159,7 @@ namespace AgroApp.Migrations
                     b.Property<int?>("FarmId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("LastService")
+                    b.Property<DateTime>("LastService")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Model")
@@ -230,7 +232,7 @@ namespace AgroApp.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime?>("dateTime")
+                    b.Property<DateTime>("dateTime")
                         .HasColumnType("datetime2");
 
                     b.HasKey("TaskId");
@@ -504,15 +506,15 @@ namespace AgroApp.Migrations
                         {
                             Id = "7b6c29c2-68a5-41b2-99bb-bdffade561fa",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3382c155-0c06-4b58-9be6-85b9e239efe5",
+                            ConcurrencyStamp = "1e526b4e-9249-425f-a279-a76d7a0cc1ea",
                             Email = "admin@test.pl",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@TEST.PL",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKAibLrzuzt+T4QcSXkncMyqHDVHLvuyy07RbTtWNZjtlqdh7A3w027uEtIySCwQAw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEBHDti5nvfx2Ky0VhpkXjywRqI2KtF6ZaELI1/gepEgRLb7N3M0a3aLhaEOp8Crmuw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "c8b0a1aa-d076-48b1-9a6f-15af3ad87867",
+                            SecurityStamp = "c10b373a-0bef-4b6d-834c-25fdf510ee39",
                             TwoFactorEnabled = false,
                             UserName = "Admin",
                             Name = "Admin",

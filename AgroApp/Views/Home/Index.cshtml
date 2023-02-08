@@ -114,6 +114,22 @@
                     </div>
                 </div>
             </div>
+        }else if (User.IsInRole("Employee"))
+        {
+            <div class="row">
+                <div class="col">
+                    <div class="col-sm-4 col-md-4 col-lg-4 mx-auto zoom">
+                        <div class="card border-0 shadow rounded-3 h-100 zoom-color">
+                            <img class="card-img-top" src="~/pexels-leeloo-thefirst-5386754.jpg" />
+                            <div class="card-body">
+                                <h5 class="card-title">Zadania</h5>
+                                <p class="card-text">Przegląd przydzielonych zadań</p>
+                                <a class="nav-link text-dark stretched-link" asp-area="" asp-controller="Task" asp-action="Index"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         }
     </div>
 }

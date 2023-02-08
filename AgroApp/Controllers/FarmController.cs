@@ -6,6 +6,8 @@ using System.Dynamic;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
+using AgroApp.Repositories.Interfaces;
+using System.Collections;
 
 namespace AgroApp.Controllers
 {
@@ -13,13 +15,18 @@ namespace AgroApp.Controllers
     {
         private readonly IFarmRepository _farmRepository;
         private readonly IFieldRepository _fieldRepository;
+        private readonly IMachineRepository _machineRepository;
         private readonly UserManager<UserModel> _userManager;
-       
-        public FarmController(IFarmRepository farmRepository, IFieldRepository fieldRepository, UserManager<UserModel> userManager)
+        private RoleManager<IdentityRole> _roleManager;
+
+        public FarmController(IFarmRepository farmRepository, IFieldRepository fieldRepository, UserManager<UserModel> userManager,
+            IMachineRepository machineRepository, RoleManager<IdentityRole> roleManager)
         {
             _farmRepository = farmRepository;
             _userManager = userManager;
             _fieldRepository = fieldRepository;
+            _machineRepository = machineRepository;
+            _roleManager = roleManager;
         }
 
         [Authorize]
@@ -89,9 +96,10 @@ namespace AgroApp.Controllers
 
         [Authorize(Roles = "Administrator")]
         // GET: FarmController/Create
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
-            ViewBag.Users = getUsersById();
+            List<SelectListItem> result = await getUsersById2();
+            ViewBag.Users = result;
             return View();
         }
         [Authorize(Roles = "Administrator")]
@@ -111,14 +119,14 @@ namespace AgroApp.Controllers
 
         [Authorize(Roles = "Administrator")]
         // GET: FarmController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
             FarmModel Farm = _farmRepository.GetFarmById(id);
 
             if (Farm != null)
             {
-              
-                ViewBag.Users = getUsersById();
+                List<SelectListItem> result = await getUsersById2();
+                ViewBag.Users = result;
 
                 return View(Farm);
             }
@@ -159,7 +167,7 @@ namespace AgroApp.Controllers
         public ActionResult Delete(int id)
         {
             ViewBag.Users = getUsersById();
-            return View();
+            return View(_farmRepository.GetFarmById(id));
         }
 
         [Authorize(Roles = "Administrator")]
@@ -175,6 +183,13 @@ namespace AgroApp.Controllers
                     if(user.FarmId == id)
                     {
                         user.FarmId = null;
+                    }
+                }
+                foreach(var machine in _machineRepository.GetMachines())
+                {
+                    if(machine.FarmId == id)
+                    {
+                        _machineRepository.DeleteMachine(machine.MachineId);
                     }
                 }
                 _farmRepository.DeleteFarm(id);
@@ -199,6 +214,49 @@ namespace AgroApp.Controllers
                 usersListItem.Add(new SelectListItem { Value = user.Id, Text = user.Name + " " + user.Surname });
             }
             return usersListItem;
+        }
+
+        private async Task<List<SelectListItem>> getUsersById2()
+        {
+            var farmList = _farmRepository.GetFarms();
+            var userIdFromFarms = new List<String>();
+            var userList = _userManager.Users;
+            
+            var usersListItem = new List<SelectListItem>();
+            //null nie działa - Przekazywany jest tekst
+            usersListItem.Add(new SelectListItem { Value = "", Text = "Brak" });
+            foreach(FarmModel farm in farmList)
+            {
+                if (farm.FarmOwnerId != null)
+                {
+                    userIdFromFarms.Add(farm.FarmOwnerId);
+                }
+            }
+
+            foreach (UserModel user in userList)
+            {
+                Boolean isBusy = false;
+                foreach(String id in userIdFromFarms)
+                {
+                    if (user.Id == id)
+                    {
+                        isBusy = true;
+                    }
+                }
+                if (isBusy == false)
+                {
+                    if (await _userManager.IsInRoleAsync(user, "Farmer"))
+                     {
+                        usersListItem.Add(new SelectListItem { Value = user.Id, Text = user.Name + " " + user.Surname });
+                    }
+                }
+            }
+            //List<SelectListItem> castList = usersListItem.Cast<SelectListItem>().ToList();
+            //return outputUserList.;
+            return usersListItem;
+            //return database.Table<Patient>().ToListAsync();
+            // await Task.FromResult(doctors)
+            // List<Y> listOfY = listOfX.Cast<Y>().ToList();
         }
 
         public ActionResult FarmInfoPartial()

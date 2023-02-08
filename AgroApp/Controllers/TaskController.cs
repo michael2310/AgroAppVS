@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Threading.Tasks;
 
 namespace AgroApp.Controllers
 {
@@ -119,8 +120,9 @@ namespace AgroApp.Controllers
             try
             {
                 task.CreateDate = DateTime.UtcNow;
+                task.dateTime = null;
                 _taskRepository.AddTask(task);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(EmployeeTasks), new { id = task.UserId });
             }
             catch
             {
@@ -163,8 +165,9 @@ namespace AgroApp.Controllers
         {
             try
             {
+                var task = _taskRepository.GetTaskById(id);
                 _taskRepository.DeleteTask(id);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(EmployeeTasks), new { id = task.UserId });
             }
             catch
             {

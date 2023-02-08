@@ -3,6 +3,7 @@ using AgroApp.Models;
 using AgroApp.Repositories;
 using AgroApp.Repositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -36,7 +37,7 @@ builder.Services.AddIdentity<UserModel, IdentityRole>(options =>
 {
     options.Password.RequireDigit = false;
     options.Password.RequireLowercase = false;
-    options.Password.RequiredLength = 2;
+    options.Password.RequiredLength = 8;
     options.Password.RequireUppercase = false;
     options.User.RequireUniqueEmail = true;
 }).AddEntityFrameworkStores<ApplicationDbContext>();
@@ -66,6 +67,13 @@ else
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+app.Use(async (context, next) =>
+{
+    context.Response.Headers.Add("X-Frame-Options", "DENY");
+
+    await next();
+});
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

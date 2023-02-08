@@ -4,40 +4,41 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<h1>Edycja</h1>
 
-<h4>MachineServiceModel</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ServiceId" />
-            <div class="form-group">
-                <label asp-for="ServiceDate" class="control-label"></label>
-                <input asp-for="ServiceDate" class="form-control" />
-                <span asp-validation-for="ServiceDate" class="text-danger"></span>
+
+<div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+    <div class="card border-0 shadow rounded-3 my-5">
+        <div class="card-body p-4 p-sm-5">
+            <h4>Edytuj wpis</h4>
+            <hr />
+            <div class="row">
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="ServiceId" />
+                        <div class="form-group mb-3">
+                        <label asp-for="ServiceDate" class="control-label"></label>
+                        <input asp-for="ServiceDate" class="form-control" />
+                        <span asp-validation-for="ServiceDate" class="text-danger"></span>
+                    </div>
+                        <div class="form-group mb-3">
+                        <label asp-for="ServiceInfo" class="control-label"></label>
+                        <input asp-for="ServiceInfo" class="form-control" />
+                        <span asp-validation-for="ServiceInfo" class="text-danger"></span>
+                    </div>
+                        <div class="form-group d-grid">
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label asp-for="ServiceInfo" class="control-label"></label>
-                <input asp-for="ServiceInfo" class="form-control" />
-                <span asp-validation-for="ServiceInfo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MachineId" class="control-label"></label>
-                <select asp-for="MachineId" class="form-control" asp-items="ViewBag.MachineId"></select>
-                <span asp-validation-for="MachineId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+    <div>
+        <input type="button" class="btn btn-primary btn-sm m-0" value="Powrót do listy" onclick="location.href='@Url.Action("Details", "Machine", new {id = Model.MachineId})'" />
+    </div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

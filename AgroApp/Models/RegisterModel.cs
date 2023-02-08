@@ -16,9 +16,11 @@ namespace AgroApp.Models
         public string UserName { get; set; }
         [EmailAddress]
         [Required]
+        [StringLength(100, ErrorMessage = "Adres istnieje w bazie danych")]
         [DisplayName("Adres e-mail")]
         public string Email { get; set; }
         [Required]
+        [StringLength(100, ErrorMessage = "Hasło musi zawierać przynajmniej {2} znaków, małe i duże litery oraz znak specjalny.", MinimumLength = 8)]
         [DisplayName("Hasło")]
         public string Password { get; set; }
         [DisplayName("Stanowisko")]

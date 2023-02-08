@@ -12,41 +12,45 @@
         <input type="button" class="btn btn-primary btn-sm m-0" value="Dodaj pracownika" onclick="location.href='@Url.Action("Create", "Account")'" />
     }
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Surname)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Position)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Surname)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Position)
-            </td>
-            <td>
-                <input type="button" class="btn btn-primary btn-sm m-0" value="Zadania" onclick="location.href='@Url.Action("EmployeeTasks", "Task", new {  id=item.Id  })'" />
-                 <input type="button" class="btn btn-info btn-sm m-0" value="Szczegóły" onclick="location.href='@Url.Action("Details", "Account", new {  id=item.Id  })'" />
-                 @if(User.IsInRole("Administrator")){
-                  <input type="button" class="btn btn-warning btn-sm m-0" value="Edycja" onclick="location.href='@Url.Action("Edit", "Account", new {  id=item.Id  })'" />
-                 }
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="card border-0 shadow rounded-3 my-5">
+    <div class="card-body p-4 p-sm-5">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayName("Imię")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Nazwisko")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Stanowisko")
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+        @foreach (var item in Model) {
+                <tr>
+                        <td class="align-middle">
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                        <td class="align-middle">
+                        @Html.DisplayFor(modelItem => item.Surname)
+                    </td>
+                        <td class="align-middle">
+                        @Html.DisplayFor(modelItem => item.Position)
+                    </td>
+                    <td>
+                        <input type="button" class="btn btn-primary btn-sm m-0" value="Zadania" onclick="location.href='@Url.Action("EmployeeTasks", "Task", new {  id=item.Id  })'" />
+                         <input type="button" class="btn btn-info btn-sm m-0" value="Szczegóły" onclick="location.href='@Url.Action("Details", "Account", new {  id=item.Id  })'" />
+                         @if(User.IsInRole("Administrator")){
+                          <input type="button" class="btn btn-warning btn-sm m-0" value="Edycja" onclick="location.href='@Url.Action("Edit", "Account", new {  id=item.Id  })'" />
+                         }
+                    </td>
+                </tr>
+        }
+            </tbody>
+        </table>
+    </div>
+</div>

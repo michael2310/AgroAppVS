@@ -41,7 +41,7 @@
                 <h5 class="text-center">Czy na pewno chcesz usunąć maszynę?</h5>
                 <form class="text-center" asp-action="Delete">
                     <input type="submit" value="Tak" class="btn btn-danger" />
-                    <input type="button" class="btn btn-primary" value="Nie" onclick="location.href='@Url.Action("Index", "Machine")'" />
+                    <input type="button" class="btn btn-primary" value="Nie" onclick="location.href='@Url.Action("Details", "Machine", new {id = Model.MachineId})'" />
                 </form>
             </div>
         </div>

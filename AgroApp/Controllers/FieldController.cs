@@ -78,6 +78,11 @@ namespace AgroApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(FieldModel fieldModel)
         {
+            
+            if (ModelState.GetValidationState("Area") == Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid
+                && ModelState.GetValidationState("Name") == Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid
+                    && ModelState.GetValidationState("Number") == Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid)
+            {
                 foreach (FieldModel field in _fieldRepository.GetFieldsByFarmId(fieldModel.FarmId))
                 {
                     if (field.Number == fieldModel.Number)
@@ -86,7 +91,9 @@ namespace AgroApp.Controllers
                     }
                 }
                 _fieldRepository.AddField(fieldModel);
-            return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));
+            }
+            return View(fieldModel);
         }
 
         // GET: FieldController/Edit/5
@@ -100,9 +107,15 @@ namespace AgroApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, FieldModel fieldModel)
         {
-           _fieldRepository.UpdateField(id, fieldModel);
+            if (ModelState.GetValidationState("Area") == Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid
+                && ModelState.GetValidationState("Name") == Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid
+                    && ModelState.GetValidationState("Number") == Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid)
+            {
+                _fieldRepository.UpdateField(id, fieldModel);
 
-           return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));
+            }
+            return View(fieldModel);
         }
 
         // GET: FieldController/Delete/5

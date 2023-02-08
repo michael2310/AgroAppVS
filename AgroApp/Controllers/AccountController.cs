@@ -1,5 +1,6 @@
 ﻿using AgroApp.Models;
 using AgroApp.Repositories;
+using AgroApp.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -7,23 +8,25 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace AgroApp.Controllers
 {
-    //[Authorize]
+    [Authorize(Roles = "Administrator")]
     public class AccountController : Controller
     {
         private readonly UserManager<UserModel> _userManager;
         private readonly SignInManager<UserModel> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private IPasswordHasher<UserModel> _passwordHasher;
-        private IFarmRepository _farmRepository;
+        private readonly IFarmRepository _farmRepository;
+        private readonly ITaskRepository _taskRepository;
 
         public AccountController(UserManager<UserModel> userManager, SignInManager<UserModel> signInManager, RoleManager<IdentityRole> roleManager,
-            IPasswordHasher<UserModel> passwordHasher, IFarmRepository farmRepository)
+            IPasswordHasher<UserModel> passwordHasher, IFarmRepository farmRepository, ITaskRepository taskRepository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
             _passwordHasher = passwordHasher;
             _farmRepository = farmRepository;
+            _taskRepository = taskRepository;
         }
 
         public IActionResult AccessDenied()
@@ -110,10 +113,11 @@ namespace AgroApp.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Register(RegisterModel registerModel, string farmName)
+        //public async Task<IActionResult> Register(RegisterModel registerModel, string farmName)
+        public async Task<IActionResult> Register(RegisterModel registerModel)
         {
 
-            //if (ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 UserModel newUser = new()
                 {
@@ -157,6 +161,27 @@ namespace AgroApp.Controllers
                     }
                 }
             }
+
+
+            var farmlist = _farmRepository.GetFarms();
+            var farmsDictionary = new Dictionary<int, string>();
+            //null nie działa - Przekazywany jest tekst
+            farmsDictionary.Add(0, "brak");
+            foreach (FarmModel farm in farmlist)
+            {
+                farmsDictionary.Add(farm.FarmId, farm.FarmName);
+            }
+            SelectList farmsSelectList = new SelectList(farmsDictionary, "Key", "Value");
+            ViewBag.Farms = farmsSelectList;
+
+            var roleList = _roleManager.Roles;
+            var rolesDictionary = new Dictionary<string, string>();
+            foreach (var role in roleList)
+            {
+                rolesDictionary.Add(role.Name, role.Name);
+            }
+            SelectList rolesSelectList = new SelectList(rolesDictionary, "Key", "Value");
+            ViewBag.Roles = rolesSelectList;
             return View(registerModel);
         }
 
@@ -290,22 +315,66 @@ namespace AgroApp.Controllers
             }
         }
 
-
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> Delete(string id)
+        {
+            UserModel user = await _userManager.FindByIdAsync(id);
+            var userRole = await _userManager.GetRolesAsync(user);
+            //ViewData do gospodarstw
+
+
+
+            if (user == null)
+            {
+                return RedirectToAction("index");
+            }
+            else
+            {
+                RegisterModel registerModel = new RegisterModel()
+                {
+                    Name = user.Name,
+                    Surname = user.Surname,
+                    UserName = user.UserName,
+                    Email = user.Email,
+                    Position = user.Position,
+                    FarmId = user.FarmId,
+                    RoleName = userRole.ElementAt(0)
+                };
+                return View(registerModel);
+            }
+        }
+        [HttpPost]
+        public async Task<IActionResult> Delete(RegisterModel registerModel, string id)
         {
             UserModel user = await _userManager.FindByIdAsync(id);
             if(user != null)
             {
-                IdentityResult result = await _userManager.DeleteAsync(user);
-                if (result.Succeeded)
+                var tasks = _taskRepository.GetTasksByUserId(user.Id);
+                var farm = _farmRepository.GetFarmByUserId(user.Id);
+                if (farm != null)
                 {
-                    return RedirectToAction("Index");
+                    farm.FarmOwnerId = null;
+                    farm.FarmOwner = null;
+                    farm.FarmOwnerName = null;
+                    _farmRepository.UpdateFarm(farm.FarmId, farm);
                 }
-                else
+                if(tasks != null)
                 {
-                    Errors(result);
+                    foreach(var task in tasks)
+                    {
+                        _taskRepository.DeleteTask(task.TaskId);
+                    }
                 }
+
+                    IdentityResult result = await _userManager.DeleteAsync(user);
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        Errors(result);
+                    }
             }
             else
             {

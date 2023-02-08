@@ -69,6 +69,7 @@ namespace AgroApp.Controllers
         {
             try
             {
+                machine.LastService = null;
                 _machineRepository.AddMachine(machine);
                 return RedirectToAction(nameof(Index));
             }
@@ -101,6 +102,7 @@ namespace AgroApp.Controllers
         }
 
         // GET: MachineController/Delete/5
+        [HttpGet]
         public ActionResult Delete(int id)
         {
             return View(_machineRepository.GetMachineById(id));

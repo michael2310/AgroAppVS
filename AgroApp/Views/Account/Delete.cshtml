@@ -1,0 +1,50 @@
+﻿@model AgroApp.Models.RegisterModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Usuwanie</h1>
+
+<
+<div>
+    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+        <div class="card border-0 shadow rounded-3 my-5">
+            <div class="card-body p-4 p-sm-5">
+                <h4>Usuń wpis</h4>
+                <hr />
+                <dl class="row text-center">
+                    <dt class="">
+                        @Html.DisplayNameFor(model => model.Name)
+                    </dt>
+                    <dd class="">
+                        @Html.DisplayFor(model => model.Name)
+                    </dd>
+                    <dt class="">
+                        @Html.DisplayNameFor(model => model.Surname)
+                    </dt>
+                    <dd class="">
+                        @Html.DisplayFor(model => model.Surname)
+                    </dd>
+                    <dt class="">
+                        @Html.DisplayNameFor(model => model.UserName)
+                    </dt>
+                    <dd class="">
+                        @Html.DisplayFor(model => model.UserName)
+                    </dd>
+                    <dt class="">
+                        @Html.DisplayNameFor(model => model.Email)
+                    </dt>
+                    <dd class="">
+                        @Html.DisplayFor(model => model.Email)
+                    </dd>
+                </dl>
+                <h5 class="text-center">Czy na pewno chcesz usunąć wpis?</h5>
+                <form class="text-center" asp-action="Delete">
+                    <input type="submit" value="Tak" class="btn btn-danger" />
+                    <input type="button" class="btn btn-primary" value="Nie" onclick="location.href='@Url.Action("Index", "Account")'" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -12,38 +12,92 @@
             <h4>Edytuj zadanie</h4>
             <hr />
             <div class="row">
-                <form asp-action="Edit">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <input type="hidden" asp-for="TaskId" />
-                    <div class="form-group mb-3">
-                        <label asp-for="Subject" class="control-label"></label>
-                        <input asp-for="Subject" class="form-control" />
-                        <span asp-validation-for="Subject" class="text-danger"></span>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label asp-for="Description" class="control-label"></label>
-                        <input asp-for="Description" class="form-control" />
-                        <span asp-validation-for="Description" class="text-danger"></span>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label asp-for="CreateDate" class="control-label"></label>
-                        <input asp-for="CreateDate" class="form-control" />
-                        <span asp-validation-for="CreateDate" class="text-danger"></span>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label asp-for="ExpectedEndDate" class="control-label"></label>
-                        <input asp-for="ExpectedEndDate" class="form-control" />
-                        <span asp-validation-for="ExpectedEndDate" class="text-danger"></span>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label asp-for="dateTime" class="control-label"></label>
-                        <input asp-for="dateTime" class="form-control" />
-                        <span asp-validation-for="dateTime" class="text-danger"></span>
-                    </div>
+                @if (User.IsInRole("Employee"))
+                {
+                    <form asp-action="Edit">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="TaskId" />
+                        <div class="form-group form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" asp-for="IsDone" /> @Html.DisplayNameFor(model => model.IsDone)
+                            </label>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label asp-for="dateTime" class="control-label"></label>
+                            <input asp-for="dateTime" class="form-control" />
+                            <span asp-validation-for="dateTime" class="text-danger"></span>
+                        </div>
+
+                    <dt class="">
+                            @Html.DisplayNameFor(model => model.Subject)
+                    </dt>
+                    <dd class="">
+                            @Html.DisplayFor(model => model.Subject)
+                    </dd>
+                    <input type="hidden" asp-for="Subject" />
+
+                    <dt class="">
+                            @Html.DisplayNameFor(model => model.Description)
+                    </dt>
+                    <dd class="">
+                            @Html.DisplayFor(model => model.Description)
+                    </dd>
+                    <input type="hidden" asp-for="Description" />
+
+                    <dt class="">
+                            @Html.DisplayNameFor(model => model.CreateDate)
+                    </dt>
+                    <dd class="">
+                            @Html.DisplayFor(model => model.CreateDate)
+                    </dd>
+                    <input type="hidden" asp-for="CreateDate" />
+                     <dt class="">
+                            @Html.DisplayNameFor(model => model.ExpectedEndDate)
+                    </dt>
+                    <dd class="">
+                            @Html.DisplayFor(model => model.ExpectedEndDate)
+                    </dd>
+
+                    <input type="hidden" asp-for="ExpectedEndDate" />
                     <div class="form-group d-grid">
                         <input type="submit" value="Zapisz" class="btn btn-primary" />
                     </div>
-                </form>
+                    </form>
+                    
+                }else if(User.IsInRole("Employee")){
+                    <form asp-action="Edit">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="TaskId" />
+                        <div class="form-group mb-3">
+                            <label asp-for="Subject" class="control-label"></label>
+                            <input asp-for="Subject" class="form-control" />
+                            <span asp-validation-for="Subject" class="text-danger"></span>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label asp-for="Description" class="control-label"></label>
+                            <input asp-for="Description" class="form-control" />
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label asp-for="CreateDate" class="control-label"></label>
+                            <input asp-for="CreateDate" class="form-control" />
+                            <span asp-validation-for="CreateDate" class="text-danger"></span>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label asp-for="ExpectedEndDate" class="control-label"></label>
+                            <input asp-for="ExpectedEndDate" class="form-control" />
+                            <span asp-validation-for="ExpectedEndDate" class="text-danger"></span>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label asp-for="dateTime" class="control-label"></label>
+                            <input asp-for="dateTime" class="form-control" />
+                            <span asp-validation-for="dateTime" class="text-danger"></span>
+                        </div>
+                        <div class="form-group d-grid">
+                            <input type="submit" value="Zapisz" class="btn btn-primary" />
+                        </div>
+                    </form>
+                    }
             </div>
         </div>
     </div>

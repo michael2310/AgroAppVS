@@ -10,13 +10,14 @@ namespace AgroApp.Models
         [Key]
         [DisplayName("Id")]
         public int FieldId { get; set; }
-        [Required(ErrorMessage = "Pole jest wymagane")]
+        [Required(ErrorMessage = "Numer działki jest wymagany")]
         [DisplayName("Numer działki")]
         public int Number { get; set; }
         [DisplayName("Nazwa")]
         [MaxLength(50)]
         public string Name { get; set; }
         [DisplayName("Powierzchnia")]
+      
         public double Area { get; set; }
 
         [ForeignKey("Farm")]

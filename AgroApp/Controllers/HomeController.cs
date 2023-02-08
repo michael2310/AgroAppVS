@@ -22,7 +22,7 @@ namespace AgroApp.Controllers
            
         }
         
-        [Authorize(Roles = "Farmer, Administrator")]
+        [Authorize(Roles = "Farmer, Administrator, Employee")]
         public async Task<IActionResult> Index()
         {
             UserModel user = await _userManager.GetUserAsync(HttpContext.User);

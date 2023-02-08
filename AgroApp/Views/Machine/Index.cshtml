@@ -22,12 +22,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.ProductionYear)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LastService)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Farm)
-            </th>
             <th></th>
         </tr>
     </thead>
@@ -42,12 +36,6 @@
             </td>
             <td class="align-middle">
                 @Html.DisplayFor(modelItem => item.ProductionYear)
-            </td>
-            <td class="align-middle">
-                @Html.DisplayFor(modelItem => item.LastService)
-            </td>
-            <td class="align-middle">
-                @Html.DisplayFor(modelItem => item.Farm.FarmId)
             </td>
             <td>
                 <input type="button" class="btn btn-primary btn-sm m-0" value="Przeglądy" onclick="location.href='@Url.Action("Details", "Machine", new {  id=item.MachineId  })'" />

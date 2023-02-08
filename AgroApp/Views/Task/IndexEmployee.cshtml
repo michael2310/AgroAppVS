@@ -4,15 +4,13 @@
     ViewData["Title"] = "IndexEmployee";
 }
 
-<h1>IndexEmployee</h1>
+<h1>Zadania</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 
 
 <div class="card border-0 shadow rounded-3 my-5">
     <div class="card-body p-4 p-sm-5">
+        <h2>Aktywne zadania</h2>
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -28,19 +26,13 @@
                     <th>
                         @Html.DisplayNameFor(model => model.dateTime)
                     </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.IsOpen)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.IsDone)
-                    </th>
                 </tr>
             </thead>
             <tbody>
         @foreach (var item in Model) {
-                    if (item.IsOpen == false)
+                    if (item.IsDone == false)
                     {
-                        <tr style="background-color:#FF0000">
+                        <tr>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Subject)
                             </td>
@@ -54,48 +46,64 @@
                                 @Html.DisplayFor(modelItem => item.dateTime)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.IsOpen)
-                            </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.IsDone)
-                            </td>
-                            <td>
-                                <a asp-action="Edit" asp-route-id="@item.TaskId">Edit</a> |
-                                <a asp-action="Details" asp-route-id="@item.TaskId">Details</a> |
-                                <a asp-action="Delete" asp-route-id="@item.TaskId">Delete</a>
+                                <input type="button" class="btn btn-primary btn-sm m-0" value="Szczegóły" onclick="location.href='@Url.Action("Details", "Task", new {  id=item.TaskId  })'" />
+                                <input type="button" class="btn btn-warning btn-sm m-0" value="Edytuj" onclick="location.href='@Url.Action("Edit", "Task", new {  id=item.TaskId  })'" />
                             </td>
                         </tr>
                     }
-                    else
-                    {
-                        <tr style="background-color:#00FF00">
-                            <td>
-                        @Html.DisplayFor(modelItem => item.Subject)
-                    </td>
-
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CreateDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ExpectedEndDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.dateTime)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IsOpen)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IsDone)
-                    </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.TaskId">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.TaskId">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.TaskId">Delete</a>
-                    </td>
-                </tr>
-                }
             }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="card border-0 shadow rounded-3 my-5">
+    <div class="card-body p-4 p-sm-5">
+        <h2>Ukończone zadania</h2>
+        <table class="table table-striped">
+
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Subject)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CreateDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ExpectedEndDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.dateTime)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    if (item.IsDone == true)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Subject)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CreateDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ExpectedEndDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.dateTime)
+                            </td>
+                            <td>
+                                <input type="button" class="btn btn-primary btn-sm m-0" value="Szczegóły" onclick="location.href='@Url.Action("Details", "Task", new {  id=item.TaskId  })'" />
+                                <input type="button" class="btn btn-warning btn-sm m-0" value="Edytuj" onclick="location.href='@Url.Action("Edit", "Task", new {  id=item.TaskId  })'" />
+                            </td>
+                        </tr>
+                    }
+                }
             </tbody>
         </table>
     </div>

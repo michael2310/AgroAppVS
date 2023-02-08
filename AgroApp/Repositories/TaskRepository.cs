@@ -68,6 +68,7 @@ namespace AgroApp.Repositories.Interfaces
                 result.dateTime = task.dateTime;
                 result.Subject = task.Subject;
                 result.Description = task.Description;
+                result.IsDone = task.IsDone;
                 _context.SaveChanges();
             }
         }

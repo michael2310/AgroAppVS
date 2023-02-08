@@ -50,6 +50,7 @@ namespace AgroApp.Repositories
             if(result != null)
             {
                 result.FarmName = farm.FarmName;
+                result.FarmOwnerName = farm.FarmOwnerName;
                 result.FarmStatus = farm.FarmStatus;
                 result.FarmOwnerId = farm.FarmOwnerId;
 
