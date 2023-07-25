@@ -8,7 +8,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace AgroApp.Controllers
 {
-    [Authorize(Roles = "Administrator")]
+    //[Authorize(Roles = "Administrator")]
+    //do testu
+    [Authorize(Roles = "Farmer, Administrator, Employee")]
     public class AccountController : Controller
     {
         private readonly UserManager<UserModel> _userManager;
